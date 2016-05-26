@@ -16,3 +16,43 @@ function getDeltaTime()
         
     return deltaTime;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function run()
+{
+    context.fillStyle = "#ccc";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    
+    var deltaTime = getDeltaTime;
+    
+    //Add Player draw and update when Jack finishes the player.js
+    
+    fpsTime += deltaTime;
+    fpsCount++;
+    if(fpsTime >= 1)
+    {
+        fpsTime -= 1;
+        fps = fpsCount;
+        fpsCount = 0;
+    }
+    
+    context.fillStyle = "#f00";
+    context.font = "14px Arial";
+    context.fillText("FPS: " + fps, 5, 20, 100);
+    
+}
