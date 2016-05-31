@@ -3,7 +3,7 @@ var player = new Player();
 var keyboard = new Keyboard();
 
 var LAYER_COUNT = 2;
-var MAP = { tw: 60, th: 15};
+var MAP = { tw: 60, th: 15 };
 var TILE = 35;
 var TILESET_TILE = TILE * 2;
 var TILESET_PADDING = 2;
