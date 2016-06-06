@@ -15,7 +15,7 @@ function getDeltaTime()
 	return deltaTime;
 }
 
-var LAYER_COUNT = 1;
+var LAYER_COUNT = 2;
 var MAP = { tw: 50, th: 20 };
 var TILE = 35;
 var TILESET_TILE = TILE * 2;
@@ -24,9 +24,9 @@ var TILESET_SPACING = 2;
 var TILESET_COUNT_X = 14;
 var TILESET_COUNT_Y = 14;
 
-var LAYER_BACKGROUND = 0;
-var LAYER_PLATFORMS = 1;
-var LAYER_LADDERS = 2;
+var LAYER_BACKGROUND = 1;
+var LAYER_PLATFORMS = 0;
+//var LAYER_LADDERS = 2;
 
 var METER = TILE;
 var GRAVITY = METER * 9.8 * 6;
@@ -112,7 +112,7 @@ function cellAtTileCoord(layer, tx, ty)
 {
 	if(tx < 0 || tx >= Map.tw || ty < 0)
 		return 1;
-        console.log(cells);
+       
 	if(ty >= Map.th)
 		return 0;
 	return cells[layer][ty][tx];
