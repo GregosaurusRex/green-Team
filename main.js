@@ -2,14 +2,26 @@
 var player = new Player();
 var keyboard = new Keyboard();
 
-var LAYER_COUNT = 2;
-var MAP = { tw: 60, th: 15 };
+var LAYER_COUNT = 3;
+var MAP = { tw: 50, th: 20 };
 var TILE = 35;
 var TILESET_TILE = TILE * 2;
 var TILESET_PADDING = 2;
 var TILESET_SPACING = 2;
 var TILESET_COUNT_X = 14;
 var TILESET_COUNT_Y = 14;
+
+var LAYER_BACKGROUND = 0;
+var LAYER_PLATFORMS = 1;
+var LAYER_LADDERS = 2;
+
+var METER = TILE;
+var GRAVITY = METER * 9.8 * 6;
+var MAXDX = METER * 10;
+var MAXDY = METER * 15;
+var ACCEL = MAXDX * 2;
+var FRICTION = MAXDX * 6;
+var JUMP = METER * 1500;
 
 var tileset = document.createElement("img");
 tileset.src = "tileset.png";
@@ -62,9 +74,73 @@ function run()
     context.fillStyle = "#f00";
     context.font = "14px Arial";
     context.fillText("FPS: " + fps, 5, 20, 100);*/
+   
+    console.log(player.position);
+    console.log(player.velocity);
     
 }
 
+function cellAtPixelCoord(layer, x,y)
+{
+    if(x < 0 || x > SCREEN_WIDTH || y < 0)
+        return 1;
+       
+    if(y > SCREEN_HEIGHT)
+        return 0;
+    return cellAtTileCoord(layer, p2t(x), p2t(y));
+};
+
+function cellAtTileCoord(layer, tx, ty)
+{
+	if(tx < 0 || tx >= Map.tw || ty < 0)
+		return 1;
+        console.log(ty);
+	if(ty >= Map.th)
+		return 0;
+	return cells[layer][ty][tx];
+};
+
+function tileToPixel(tile)
+{
+    return tile * TILE;
+};
+
+function pixelToTile(pixel)
+{
+    return Math.floor(pixel/TILE);
+};
+
+function bound(value, min, max)
+{
+    if(value < min)
+        return min;
+    if(value > max)
+        return max;
+    return value;
+}
+
+var cells = [];
+function initialize() {
+    for(var layerIdx = 0; layerIdx < LAYER_COUNT; layerIdx++) {
+        cells[layerIdx] = [];
+        var idx = 0;
+        for(var y = 0; y < level1.layers[layerIdx].height; y++) {
+            cells[layerIdx][y] = [];
+            for(var x = 0; x < level1.layers[layerIdx].width; x++) {
+                if(level1.layers[layerIdx].data[idx] != 0) {
+                    cells[layerIdx][y][x] = 1;
+                    cells[layerIdx][y-1][x] = 1;
+                    cells[layerIdx][y-1][x+1] = 1;
+                    cells[layerIdx][y][x+1] = 1;
+                }
+                else if(cells[layerIdx][y][x] != 1) {
+                    cells[layerIdx][y][x] = 0;
+                }
+                idx++;
+            }
+        }
+    }
+}
 
 
 (function() {
@@ -90,5 +166,4 @@ function run()
 })();
 
 window.onEachFrame(run);
-
 
