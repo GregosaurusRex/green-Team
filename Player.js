@@ -1,24 +1,8 @@
 
 var canvas = document.getElementById("gameCanvas");
 var context = canvas.getContext("2d");
-
-var startFrameMillis = Date.now();
-var endFrameMillis = Date.now();
-
-function getDeltaTime()
-{
-	endFrameMillis = startFrameMillis;
-	startFrameMillis = Date.now();
-
-	var deltaTime = (startFrameMillis - endFrameMillis) * 0.001;
-
-	if(deltaTime > 1)
-		deltaTime = 1;
-
-	return deltaTime;
-}
-
-var LAYER_COUNT = 3;
+/*
+var LAYER_COUNT = 1;
 var MAP = { tw: 50, th: 20 };
 var TILE = 35;
 var TILESET_TILE = TILE * 2;
@@ -38,7 +22,7 @@ var MAXDY = METER * 15;
 var ACCEL = MAXDX * 2;
 var FRICTION = MAXDX * 6;
 var JUMP = METER * 1500;
-
+*/
 
 var Player = function() {
     this.image = document.createElement("img");

@@ -1,8 +1,21 @@
 
-var player = new Player();
-var keyboard = new Keyboard();
+var startFrameMillis = Date.now();
+var endFrameMillis = Date.now();
 
-var LAYER_COUNT = 3;
+function getDeltaTime()
+{
+	endFrameMillis = startFrameMillis;
+	startFrameMillis = Date.now();
+
+	var deltaTime = (startFrameMillis - endFrameMillis) * 0.001;
+
+	if(deltaTime > 1)
+		deltaTime = 1;
+
+	return deltaTime;
+}
+
+var LAYER_COUNT = 1;
 var MAP = { tw: 50, th: 20 };
 var TILE = 35;
 var TILESET_TILE = TILE * 2;
@@ -22,6 +35,9 @@ var MAXDY = METER * 15;
 var ACCEL = MAXDX * 2;
 var FRICTION = MAXDX * 6;
 var JUMP = METER * 1500;
+
+var player = new Player();
+var keyboard = new Keyboard();
 
 var tileset = document.createElement("img");
 tileset.src = "tileset.png";
@@ -80,6 +96,8 @@ function run()
     
 }
 
+
+
 function cellAtPixelCoord(layer, x,y)
 {
     if(x < 0 || x > SCREEN_WIDTH || y < 0)
@@ -94,7 +112,7 @@ function cellAtTileCoord(layer, tx, ty)
 {
 	if(tx < 0 || tx >= Map.tw || ty < 0)
 		return 1;
-        console.log(ty);
+        console.log(cells);
 	if(ty >= Map.th)
 		return 0;
 	return cells[layer][ty][tx];
@@ -141,6 +159,8 @@ function initialize() {
         }
     }
 }
+
+initialize();
 
 
 (function() {
