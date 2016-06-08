@@ -1,46 +1,41 @@
 
 var canvas = document.getElementById("gameCanvas");
 var context = canvas.getContext("2d");
-/*
-var LAYER_COUNT = 1;
-var MAP = { tw: 50, th: 20 };
-var TILE = 35;
-var TILESET_TILE = TILE * 2;
-var TILESET_PADDING = 2;
-var TILESET_SPACING = 2;
-var TILESET_COUNT_X = 14;
-var TILESET_COUNT_Y = 14;
 
-var LAYER_BACKGROUND = 0;
-var LAYER_PLATFORMS = 1;
-var LAYER_LADDERS = 2;
+var LEFT = 0;
+var RIGHT = 1;
 
-var METER = TILE;
-var GRAVITY = METER * 9.8 * 6;
-var MAXDX = METER * 10;
-var MAXDY = METER * 15;
-var ACCEL = MAXDX * 2;
-var FRICTION = MAXDX * 6;
-var JUMP = METER * 1500;
-*/
+var ANIM_IDLE_LEFT = 0;
+var ANIM_JUMP_LEFT = 1;
+var ANIM_WALK_LEFT = 2;
+var ANIM_IDLE_RIGHT = 3;
+var ANIM_JUMP_RIGHT = 4;
+var ANIM_WALK_RIGHT = 5;
+var ANIM_MAX = 6;
 
 var Player = function() {
-    this.image = document.createElement("img");
+    this.sprite = new Sprite("Sprite sheet for Bob.png");
+    this.sprite.buildAnimation(9, 1, 49, 123, 0.05,
+                            [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+                            
+    for(var i = 0; i < ANIM_MAX; i++)
+    {
+        this.sprite.setAnimationOffset(i, -55, -87);
+    }
+    
+    
     this.position = new Vector2();
     this.position.set( 9*TILE, 0*TILE );
     
     this.width = 60;
     this.height = 135;
     
-    this.offset = new Vector2();
-    this.offset.set(-55, -87);
-    
     this.velocity = new Vector2();
     
     this.falling = true;
     this.jumping = false;
     
-    this.image.src = "Bob.png";
+    this.direction = LEFT;
     
     console.log(LAYER_PLATFORMS);
     
@@ -51,6 +46,7 @@ Player.prototype.update = function(deltaTime)
 {
     console.log(player.velocity);
     console.log(player.position);
+    this.sprite.update(deltaTime);
     
     var left = false;
     var right = false;
@@ -144,9 +140,11 @@ Player.prototype.update = function(deltaTime)
 
 Player.prototype.draw = function()
 {
-    context.save();
+   /* context.save();
         context.translate(this.position.x, this.position.y);
         context.rotate(this.rotation);
         context.drawImage(this.image, -this.width/2, -this.height/2);
-     context.restore();
+     context.restore(); */
+     
+     this.sprite.draw(context, this.position.x, this.position.y);
 }
