@@ -5,13 +5,7 @@ var context = canvas.getContext("2d");
 var LEFT = 0;
 var RIGHT = 1;
 
-var ANIM_IDLE_LEFT = 0;
-var ANIM_JUMP_LEFT = 1;
-var ANIM_WALK_LEFT = 2;
-var ANIM_IDLE_RIGHT = 3;
-var ANIM_JUMP_RIGHT = 4;
-var ANIM_WALK_RIGHT = 5;
-var ANIM_MAX = 6;
+var ANIM_MAX = 1;
 
 var Player = function() {
     this.sprite = new Sprite("Sprite sheet for Bob.png");
